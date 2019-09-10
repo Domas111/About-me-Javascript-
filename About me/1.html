@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+html,body {
+  font-family: 'Raleway', sans-serif;
+  padding: 3em 2em;
+  font-size: 18px;
+  background: black;
+  color: white
+}
+  a {
+position: absolute;
+top: 15px;
+  left: 0px;
+  background-color: black;
+  border-style: solid;
+  border-color: orange;
+  border-width:1px; 
+  height:147px;
+  color: white;
+  font-family: "sans-serif";	
+  padding: 1em 1.5em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+h1,h2 {
+  font-weight: 200;
+  margin: 0.4em 0;
+}
+h1 { font-size: 3.5em; }
+h2 {
+  color:white;
+  font-size: 2em;
+}
+ul.b {
+    list-style-type: square;
+	padding-left:17px;
+
+}
+table {
+  position: absolute;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  right: 46px;
+  top: 510px;
+}
+table, th, td, tr {
+    border-collapse: collapse;
+	border-color: orange;
+    padding: 5px;
+	width: 980px; 
+}	
+textarea{
+  position: absolute;
+  right: 40px;
+  top: 128px;
+  background:black;
+  width: 520px;
+  height: 250px;
+  color: white;
+  border: 1px solid orange;
+  border-radius: 4px;
+}
+
+.button {
+    background-color: black;
+	border-color:orange;
+	border-width: thin;
+	height:47px;
+	width: 209px; 
+	font-family: "sans-serif";	
+    cursor: pointer;
+	color: white;
+	font-size: 26px;
+	position: absolute;
+    top: 842px;
+    right: 187px;
+
+}
+
+.buttontwo {
+    background-color: black;
+	border-color:orange;
+	border-width: thin;
+	height:45px;
+	width: 200px; 
+	font-family: "sans-serif";
+    cursor: pointer;
+	color: white;
+	font-size: 26px;
+	position: absolute;
+    top: 451px;
+    right: 200px;
+
+}
+.manosert{
+    
+    position: absolute;
+    top: 374px;
+    right: 775px;
+
+  
+}
+.manoeducation{
+    
+    position: absolute;
+    top: 373px;
+    right: 212px;
+  
+}
+hr {
+height: 1px;
+width: 23.6%;
+color: orange;
+background-color: orange;
+border: none;
+}
+img {
+    border: 1px solid orange;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+	margin-top:5px;
+}
+div.numb {
+    width:235px;
+    position: absolute;
+    top: 450px;
+    right: 780px;
+    border: 1px solid orange;
+}
+div.sert_img {
+    position: absolute;
+    top: 87px;
+    right: 1000px;
+ 
+}
+.mySlides {display:none;}
+</style>
+</head>
+<script>
+var TxtRotate = function(el, toRotate, period) {
+  this.toRotate = toRotate;
+  this.el = el;
+  this.loopNum = 0;
+  this.period = parseInt(period, 10) || 2000;
+  this.txt = '';
+  this.tick();
+  this.isDeleting = false;
+};
+
+TxtRotate.prototype.tick = function() {
+  var i = this.loopNum % this.toRotate.length;
+  var fullTxt = this.toRotate[i];
+
+  if (this.isDeleting) {
+    this.txt = fullTxt.substring(0, this.txt.length - 1);
+  } else {
+    this.txt = fullTxt.substring(0, this.txt.length + 1);
+  }
+
+  this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+  var that = this;
+  var delta = 300 - Math.random() * 100;
+
+  if (this.isDeleting) { delta /= 2; }
+
+  if (!this.isDeleting && this.txt === fullTxt) {
+    delta = this.period;
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === '') {
+    this.isDeleting = false;
+    this.loopNum++;
+    delta = 500;
+  }
+
+  setTimeout(function() {
+    that.tick();
+  }, delta);
+};
+
+window.onload = function() {
+  var elements = document.getElementsByClassName('txt-rotate');
+  for (var i=0; i<elements.length; i++) {
+    var toRotate = elements[i].getAttribute('data-rotate');
+    var period = elements[i].getAttribute('data-period');
+    if (toRotate) {
+      new TxtRotate(elements[i], JSON.parse(toRotate), period);
+    }
+  }
+  var css = document.createElement("style");
+  css.type = "text/css";
+  css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid orange }";
+  document.body.appendChild(css);
+};
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 2000); 
+}
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+     dots[i].className = dots[i].className.replace(" w3-orange", "");
+  }
+  x[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " w3-orange";
+}
+function GenerateTable() {
+    
+    var experience = new Array();
+    experience.push(["Data metais: ", "Įmonės pavadinimas: ", "Pareigos: ","Veikla: "]);
+    experience.push([ "2018/03 - 2018/11", "Všį „Lietuvos nacionalinis radijas ir televizija“","Programuotojas","Darbas su 'NET Framework', 'ASP.NET', aplikacijų kūrimas. Programavau C#, JavaScript, HTML, CSS, jQuery kalbomis."]);
+    experience.push([ "2016/10 - 2017/08", "UAB „Ost Express“"," Jaunesnysis programuotojas", "Duomenų bazių ir aplikacijų kūrimas. Programavau SQL, JavaScript, C#, HTML, CSS kalbomis."]);
+ 
+ 
+    
+    var table = document.createElement("TABLE");
+    table.border = "1";
+    
+    var columnCount = experience[0].length;
+    
+    var row = table.insertRow(-1);
+    for (var i = 0; i < columnCount; i++) {
+        var headerCell = document.createElement("TH");
+        headerCell.innerHTML = experience[0][i];
+        row.appendChild(headerCell);
+    }
+   
+    for (var i = 1; i < experience.length; i++) {
+        row = table.insertRow(-1);
+        for (var j = 0; j < columnCount; j++) {
+            var cell = row.insertCell(-1);
+            cell.innerHTML = experience[i][j];
+        }
+    }
+ 
+    var dvTable = document.getElementById("dvTable");
+    dvTable.innerHTML = "";
+    dvTable.appendChild(table);
+}
+function Generateeducation() {
+    var x = document.createElement("TEXTAREA");
+    var t = document.createTextNode("2015 - 2019\nVilniaus Verslo Kolegija\nStudijų programa: Internetinės technologijos ir programavimas\nMokslinis laipsnis: Profesinis Bakalauras\n---\n2003 - 2007\nVilniaus Universitetas\nStudijų programa: Tarptautinė Ekonomika\nMokslinis laipsnis: Universitetinis Bakalauras   ");
+	x.appendChild(t);
+    document.body.appendChild(x);
+}
+
+</script>
+
+<body>
+<img src="as.png" alt="Avatar" style="width:200px">
+<h2>Dominykas Podgaiskis</h2>
+<h3>Programuoju:
+  <span
+     class="txt-rotate"
+     data-period="1000"
+     data-rotate='[ "C#", "JavaScript", "SQL", "HTML5", "CSS3","jQuery","R" ]'></span>
+</h3>
+<hr>
+<p>Gimimo data: 1985.08.18<br>
+Tel.(Mobilus): +37060282327<br>
+E-mail:. dominykas1985@gmail.com<br>
+Vairuotojo pažymėjimas: B (14 metų)<br>
+</p>
+<hr>
+Užsienio kalbos:
+<ul class="b">
+  <li>Lietuvių - gimtoji
+  <li>Anglų - kalbu gerai, rašau ir skaitau puikiai</li>
+  <li>Rusų - kalbu ir skaitau puikiai, rašau gerai </li>
+  <li>Lenkų -  kalbu ir skaitau puikiai, rašau gerai</li>
+</ul>
+
+<div class="manosert">
+  <h2 >Mano sertifikatai</h2>
+
+</div>
+
+<div class="sert_img" style="max-width:100px">
+  <img class="mySlides" src="https://s17.directupload.net/images/190826/ovec53cf.jpg" style="width:400%">
+  <img class="mySlides" src="http://fs5.directupload.net/images/180818/ep8bj2fi.jpg" style="width:400%">
+  <img class="mySlides" src="http://fs1.directupload.net/images/180818/9deukkbi.jpg" style="width:400%">
+  <img class="mySlides" src="http://fs5.directupload.net/images/180818/cldkmfmj.jpg" style="width:400%">
+  <img class="mySlides" src="http://fs1.directupload.net/images/180818/u8jgd7n3.jpg" style="width:400%">
+</div>
+
+<div class="numb">
+
+  <button class="w3-button demo" onclick="currentDiv(1)">1</button> 
+  <button class="w3-button demo" onclick="currentDiv(2)">2</button> 
+  <button class="w3-button demo" onclick="currentDiv(3)">3</button> 
+  <button class="w3-button demo" onclick="currentDiv(4)">4</button> 
+  <button class="w3-button demo" onclick="currentDiv(5)">5</button> 
+</div>
+<input type="button" class="buttontwo" value="Žiūrėti" onclick="Generateeducation()" />
+<input type="button" class="button" value="IT darbo patirtis" onclick="GenerateTable()" />
+
+<div id="dvTable">
+</div>
+
+<div class="manoeducation">
+<h2 align="center">Išsilavinimas</h2>
+</div>
+<a href="Pradzia.html">Atgal</a>
+</body>
+
+
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">   
+<title>Document</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>     
+<div id="wrapper">
+  <div class="phone view_1" id="phone_1">
+    <iframe src="https://codepen.io" id="frame_1"></iframe>
+  </div>
+</div>
+<div id="controls">
+  <div>
+    <label for="iframeURL"><b>Puslapis:</b></label>
+    <input type="text" id="iframeURL" placeholder="https://www.sololearn.com/Profile/363220" value="https://www.sololearn.com/Profile/363220" />
+  </div>
+  <div>
+    <label for="iframeWidth"><b>Plotas:</b></label>
+    <input type="number" id="iframeWidth" placeholder="400" value="400" />
+  </div>
+  <div>
+    <label for="iframeHeight"><b>Aukštis:</b></label>
+    <input type="number" id="iframeHeight" placeholder="650" value="650" />
+  </div>
+  <div>
+    <label for="iframePerspective"><b>Pridėti perspektyvą:</b></label>
+    <input type="checkbox" id="iframePerspective" checked="true" />
+  </div>
+</div>
+<div id="views">
+  <button value="1"><b>Gulintis</b></button>
+  <button value="2"><b>Šonas</b></button>
+  <button value="3"><b>Priekyje</b></button>
+</div>
+<a href="1.html">Mano gyvenimo aprašymas</a>
+
+</body>
+<script>
+
+var phone = document.getElementById("phone_1"),
+iframe = document.getElementById("frame_1");
+
+
+function updateView(view) {
+  if (view) {
+    phone.className = "phone view_" + view;
+  }
+}
+
+function updateIframe() {
+  iframe.src = document.getElementById("iframeURL").value;
+
+  phone.style.width = document.getElementById("iframeWidth").value + "px";
+  phone.style.height = document.getElementById("iframeHeight").value + "px";
+
+  /*Idea by /u/aerosole*/
+  document.getElementById("wrapper").style.perspective = (
+    document.getElementById("iframePerspective").checked ? "1000px" : "none"
+  );
+}
+updateIframe();
+
+/*Events*/
+document.getElementById("controls").addEventListener("change", function() {
+  updateIframe();
+});
+
+document.getElementById("views").addEventListener("click", function(evt) {
+  updateView(evt.target.value);
+});
+</script>  
+</html>
